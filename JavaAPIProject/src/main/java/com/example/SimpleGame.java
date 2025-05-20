@@ -1,6 +1,3 @@
-
-package com.example;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,14 +12,11 @@ public class SimpleGame extends JPanel implements ActionListener {
     private Timer timer;
 
     public SimpleGame() {
-        sprite = new ImageIcon("res/test/ImageUp.png").getImage();
+        sprite = new ImageIcon("res/player/PlayerRight.png").getImage();
         timer = new Timer(20, this); // update every 20 milliseconds
         timer.start();               // start the animation
     }
 
-
-
-    // Paint the star
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -31,7 +25,7 @@ public class SimpleGame extends JPanel implements ActionListener {
 //        /*Uncomment below and comment above command if you want to use Java Swings native shapes like a circle instead of an image*/
 //        g.setColor(Color.GRAY);
 //        g.fillOval(position[0], position[1], 30, 30); // Draw a blue ball
-//        g.dispose();
+        g.dispose();
     }
 
     // Called automatically every 20ms by Timer
@@ -43,11 +37,23 @@ public class SimpleGame extends JPanel implements ActionListener {
         // Bounce off left/right walls
         if (position[0] < 0 || position[0] > getWidth() - 50) {
             velocity[0] *= -1;
+
+            if (velocity[0] > 0) {
+                sprite = new ImageIcon("res/player/PlayerRight.png").getImage();
+            } else {
+                sprite = new ImageIcon("res/player/PlayerLeft.png").getImage();
+            }
         }
 
         // Bounce off top/bottom walls
         if (position[1] < 0 || position[1] > getHeight() - 50) {
             velocity[1] *= -1;
+
+            if (velocity[1] > 0) {
+                sprite = new ImageIcon("res/player/PlayerDown.png").getImage();
+            } else {
+                sprite = new ImageIcon("res/player/PlayerUp.png").getImage();
+            }
         }
 
         repaint(); // Refresh the screen

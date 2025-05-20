@@ -1,3 +1,5 @@
+package entity;
+
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -11,6 +13,7 @@ public class Entity {
         x = 30;
         y = 30;
         speed = 4;
+        direction = "down";
     }
 
 

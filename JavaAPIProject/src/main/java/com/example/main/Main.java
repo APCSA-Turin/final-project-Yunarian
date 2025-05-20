@@ -1,8 +1,10 @@
+package main;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Main {
-    // Main method to show frame
+    // main.Main method to show frame
     public static void main(String[] args) {
         JFrame frame = new JFrame("Moving Ball Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

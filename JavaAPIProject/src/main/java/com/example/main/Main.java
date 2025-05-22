@@ -6,7 +6,7 @@ import java.awt.*;
 public class Main {
     // main.Main method to show frame
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Moving Ball Game");
+        JFrame frame = new JFrame("Time Trial!!!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 

@@ -19,6 +19,8 @@ public class Player extends Entity{
 
         setDefaultValues();
         getPlayerImage();
+
+        collisionArea = new Rectangle(6, 6, 33, 33);
     }
 
     public void getPlayerImage () {
@@ -37,25 +39,51 @@ public class Player extends Entity{
     }
 
     public void update() {
+
         if (keyH.upPressed) {
             direction = "up";
             y -= speed;
 
-        } else if (keyH.downPressed) {
+        }
+        if (keyH.downPressed) {
             direction = "down";
             y += speed;
+        }
 
-        } if (keyH.leftPressed) {
+        if (keyH.leftPressed) {
             direction = "left";
             x -= speed;
 
-        } else if (keyH.rightPressed) {
+        }
+        if (keyH.rightPressed) {
             direction = "right";
             x += speed;
 
         }
+        inBounds();
     }
 
+    // keeps the player always visible on the window
+    public void inBounds() {
+        int topBound = 0;
+        int bottomBound = gp.WindowHeight - 87;
+        int leftBound = 0;
+        int rightBound = gp.WindowWidth - 64;
+
+        if (y < topBound) {
+            y = topBound;
+
+        } else if (y > bottomBound){
+            y = bottomBound;
+
+        } if (x < leftBound){
+            x = leftBound;
+
+        } else if (x > rightBound){
+            x = rightBound;
+        }
+
+    }
     public void draw(Graphics2D g) {
         BufferedImage image = null;
 

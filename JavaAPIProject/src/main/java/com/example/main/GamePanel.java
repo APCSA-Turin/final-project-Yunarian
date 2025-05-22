@@ -11,17 +11,20 @@ import java.io.IOException;
 public class GamePanel extends JPanel implements Runnable {
     final int origSize = 16; // 16 by 16
     final int scaleFactor = 3;
-    public int resizedSize = origSize * scaleFactor; // 64 by 64
+    public int resizedSize = origSize * scaleFactor; // 48 by 48
+    public int WindowWidth = 800;
+    public int WindowHeight = 600;
 
     BufferedImage background;
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
+    CollisionController cController = new CollisionController(this);
     Player player = new Player(this, keyH);
 
     int FPS = 60;
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(800, 600));
+        this.setPreferredSize(new Dimension(WindowWidth, WindowHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);

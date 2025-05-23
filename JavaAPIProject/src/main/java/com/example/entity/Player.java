@@ -12,6 +12,8 @@ public class Player extends Entity{
 
     GamePanel gp;
     KeyHandler keyH;
+    int collOffset;
+    int collSize;
 
     public Player (GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -20,7 +22,9 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
 
-        collisionArea = new Rectangle(6, 6, 33, 33);
+        collOffset = 9;
+        collSize = 30;
+        collisionArea = new Rectangle(x + collOffset, y + collOffset, collSize, collSize);
     }
 
     public void getPlayerImage () {
@@ -43,21 +47,25 @@ public class Player extends Entity{
         if (keyH.upPressed) {
             direction = "up";
             y -= speed;
+            collisionArea.translate(0, -1 * speed);
 
         }
         if (keyH.downPressed) {
             direction = "down";
             y += speed;
+            collisionArea.translate(0, speed);
         }
 
         if (keyH.leftPressed) {
             direction = "left";
             x -= speed;
+            collisionArea.translate( -1 * speed, 0);
 
         }
         if (keyH.rightPressed) {
             direction = "right";
             x += speed;
+            collisionArea.translate(speed, 0);
 
         }
         inBounds();
@@ -72,48 +80,25 @@ public class Player extends Entity{
 
         if (y < topBound) {
             y = topBound;
+            collisionArea.setLocation(x + collOffset, topBound + collOffset);
 
         } else if (y > bottomBound){
             y = bottomBound;
+            collisionArea.setLocation(x + collOffset, bottomBound + collOffset);
 
         } if (x < leftBound){
             x = leftBound;
+            collisionArea.setLocation(leftBound +collOffset, y + collOffset);
 
         } else if (x > rightBound){
             x = rightBound;
+            collisionArea.setLocation(rightBound + collOffset, y + collOffset);
         }
 
     }
 
-    public String checkCollision (Entity entity) {
-        int playerLeftBound = x + collisionArea.x;
-        int playerRightBound = x + collisionArea.x + collisionArea.width;
-        int playerTopBound = y + collisionArea.y;
-        int playerBottomBound = y + collisionArea.y + collisionArea.width;
-
-        int entityLeftBound = entity.x + entity.collisionArea.x;
-        int entityRightBound = entity.x + entity.collisionArea.x + entity.collisionArea.width;
-        int entityTopBound = entity.y + entity.collisionArea.y;
-        int entityBottomBound = entity.y + entity.collisionArea.y + entity.collisionArea.width;
-
-        // returnedCollisions is a string with directions of collision with respect to the player
-        String returnedCollisions = "";
-
-        if (playerLeftBound > entityRightBound) {
-            returnedCollisions += "left ";
-
-        } if (playerRightBound < entityLeftBound) {
-            returnedCollisions += "right ";
-
-        } if (playerTopBound > entityBottomBound) {
-            returnedCollisions += "top ";
-
-        } if (playerBottomBound < entityTopBound) {
-            returnedCollisions += "bottom ";
-
-        }
-
-        return returnedCollisions;
+    public boolean checkCollision (Entity entity) {
+        return collisionArea.intersects(entity.collisionArea);
     }
 
     public void draw(Graphics2D g) {
@@ -138,5 +123,10 @@ public class Player extends Entity{
         }
 
         g.drawImage(image, x, y, gp.resizedSize, gp.resizedSize , null);
+
+//        code to show player's collision area
+        g.setColor(Color.BLUE);
+        g.fill(collisionArea);
+        g.draw(collisionArea);
     }
 }

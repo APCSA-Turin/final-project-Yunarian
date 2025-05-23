@@ -1,5 +1,6 @@
 package main;
 
+import entity.Bullet;
 import entity.Player;
 import entity.Target;
 
@@ -21,9 +22,14 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
     CollisionController cController = new CollisionController(this);
     Player player = new Player(this, keyH);
-    Target target = new Target();
+    Target target1 = new Target(this);
+    Target target2 = new Target(this, 4);
+
+    Bullet bullet = new Bullet(this);
 
     int FPS = 60;
+    int score = 0;
+    boolean gameRunning = false;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(WindowWidth, WindowHeight));
@@ -49,6 +55,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+        target1.update();
+        target2.update();
+
+//        if (target.checkCollision(bullet)) {
+//            score++;
+//
+//        } else if (player.checkCollision(target)) {
+//            gameRunning = false;
+//
+//        }
+
     }
 
     public void run() {
@@ -63,7 +80,6 @@ public class GamePanel extends JPanel implements Runnable {
                 lastTime = currentTime;
 
                 if (delta >= 1) {
-//                    player.checkCollision(target);
                     update();
                     repaint();
                     delta--;
@@ -78,7 +94,10 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g.drawImage(background, 0, 0, 800,600, null);
+        target1.draw(g2);
+        target2.draw(g2);
         player.draw(g2);
+
         g2.dispose();
     }
 }

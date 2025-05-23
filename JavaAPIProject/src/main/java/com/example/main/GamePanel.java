@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import entity.Target;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
     CollisionController cController = new CollisionController(this);
     Player player = new Player(this, keyH);
+    Target target = new Target();
 
     int FPS = 60;
 
@@ -61,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
                 lastTime = currentTime;
 
                 if (delta >= 1) {
+//                    player.checkCollision(target);
                     update();
                     repaint();
                     delta--;

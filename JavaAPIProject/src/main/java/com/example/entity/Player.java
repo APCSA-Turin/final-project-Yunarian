@@ -84,6 +84,38 @@ public class Player extends Entity{
         }
 
     }
+
+    public String checkCollision (Entity entity) {
+        int playerLeftBound = x + collisionArea.x;
+        int playerRightBound = x + collisionArea.x + collisionArea.width;
+        int playerTopBound = y + collisionArea.y;
+        int playerBottomBound = y + collisionArea.y + collisionArea.width;
+
+        int entityLeftBound = entity.x + entity.collisionArea.x;
+        int entityRightBound = entity.x + entity.collisionArea.x + entity.collisionArea.width;
+        int entityTopBound = entity.y + entity.collisionArea.y;
+        int entityBottomBound = entity.y + entity.collisionArea.y + entity.collisionArea.width;
+
+        // returnedCollisions is a string with directions of collision with respect to the player
+        String returnedCollisions = "";
+
+        if (playerLeftBound > entityRightBound) {
+            returnedCollisions += "left ";
+
+        } if (playerRightBound < entityLeftBound) {
+            returnedCollisions += "right ";
+
+        } if (playerTopBound > entityBottomBound) {
+            returnedCollisions += "top ";
+
+        } if (playerBottomBound < entityTopBound) {
+            returnedCollisions += "bottom ";
+
+        }
+
+        return returnedCollisions;
+    }
+
     public void draw(Graphics2D g) {
         BufferedImage image = null;
 

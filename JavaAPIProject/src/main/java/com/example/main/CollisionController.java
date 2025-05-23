@@ -9,7 +9,5 @@ public class CollisionController {
         this.gp = gp;
     }
 
-    public void checkCollision (Entity entity) {
 
-    }
 }

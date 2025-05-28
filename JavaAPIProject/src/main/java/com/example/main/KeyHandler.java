@@ -24,7 +24,7 @@ public class KeyHandler implements KeyListener{
         } if (code == KeyEvent.VK_D) {
             rightPressed = true;
 
-        } if (code == KeyEvent.VK_Q) {
+        } if (code == KeyEvent.VK_V) {
             shooting = true;
         }
     }
@@ -45,7 +45,7 @@ public class KeyHandler implements KeyListener{
         } if (code == KeyEvent.VK_D) {
             rightPressed = false;
 
-        } if (code == KeyEvent.VK_Q) {
+        } if (code == KeyEvent.VK_V) {
             shooting = false;
         }
     }

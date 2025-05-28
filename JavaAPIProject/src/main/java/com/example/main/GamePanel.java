@@ -1,6 +1,7 @@
 package main;
 
 import entity.Bullet;
+import entity.Entity;
 import entity.Player;
 import entity.Target;
 
@@ -25,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     Target target1 = new Target(this);
     Target target2 = new Target(this, 4);
 
-    Bullet bullet = new Bullet(this);
+    Bullet bullet = new Bullet(this, player);
 
     int FPS = 60;
     int score = 0;
@@ -58,13 +59,38 @@ public class GamePanel extends JPanel implements Runnable {
         target1.update();
         target2.update();
 
-//        if (target.checkCollision(bullet)) {
-//            score++;
-//
-//        } else if (player.checkCollision(target)) {
-//            gameRunning = false;
-//
-//        }
+
+        // if a target intersects with the bullet,
+        // that target has their location regenerated,
+        // and score is incremented by 1.
+
+        // currently running too many times whenever true.
+        if (target1.checkCollision(bullet)) {
+            target1.newX();
+            target1.newY();
+            score++;
+
+            System.out.println("Score: " + score);
+
+        } else if (target1.y == 0) {
+            target1.collisionArea.setSize(48, 48);
+        }
+
+        if (target2.checkCollision(bullet)) {
+            target2.newX();
+            target2.newY();
+            target2.collisionArea.setLocation(target2.x, target2.y);
+            score++;
+            System.out.println("Score: " + score);
+
+        } else if (target2.y == 0) {
+            target2.collisionArea.setSize(48, 48);
+        }
+
+        if (player.checkCollision(target1) || player.checkCollision(target2)) {
+            gameRunning = false;
+
+        }
 
     }
 
@@ -97,6 +123,9 @@ public class GamePanel extends JPanel implements Runnable {
         target1.draw(g2);
         target2.draw(g2);
         player.draw(g2);
+        if (keyH.shooting) {
+            bullet.displayBullet(g2);
+        }
 
         g2.dispose();
     }

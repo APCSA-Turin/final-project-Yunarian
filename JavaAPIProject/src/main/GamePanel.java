@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     int FPS = 60;
     int score = 0;
-    boolean gameRunning = false;
+    boolean gameRunning = true;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(WindowWidth, WindowHeight));
@@ -63,17 +63,14 @@ public class GamePanel extends JPanel implements Runnable {
         // if a target intersects with the bullet,
         // that target has their location regenerated,
         // and score is incremented by 1.
-
-        // currently running too many times whenever true.
         if (target1.checkCollision(bullet)) {
             target1.newX();
             target1.newY();
+            target1.collisionArea.setLocation(target1.x, target1.y);
             score++;
+            target1.speed++;
+            target2.speed++;
 
-            System.out.println("Score: " + score);
-
-        } else if (target1.y == 0) {
-            target1.collisionArea.setSize(48, 48);
         }
 
         if (target2.checkCollision(bullet)) {
@@ -81,10 +78,9 @@ public class GamePanel extends JPanel implements Runnable {
             target2.newY();
             target2.collisionArea.setLocation(target2.x, target2.y);
             score++;
-            System.out.println("Score: " + score);
+            target1.speed--;
+            target2.speed--;
 
-        } else if (target2.y == 0) {
-            target2.collisionArea.setSize(48, 48);
         }
 
         if (player.checkCollision(target1) || player.checkCollision(target2)) {
@@ -100,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
             long lastTime = System.nanoTime();
             long currentTime;
 
-            while (gameThread != null) {
+            while (gameThread != null && gameRunning) {
                 currentTime = System.nanoTime();
                 delta += (currentTime - lastTime)/drawInterval;
                 lastTime = currentTime;
@@ -127,6 +123,13 @@ public class GamePanel extends JPanel implements Runnable {
             bullet.displayBullet(g2);
         }
 
+        g.setColor(Color.WHITE);
+        setFont(new Font("SansSerif", Font.PLAIN, 32));
+        g.drawString("Score: " + score, 9, WindowHeight - 50);
+
+        if (!gameRunning) {
+            g.drawString("YOU LOST!!!!!!!!", 300, 300);
+        }
         g2.dispose();
     }
 }

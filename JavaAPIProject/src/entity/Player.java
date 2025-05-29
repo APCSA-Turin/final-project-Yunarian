@@ -12,8 +12,6 @@ public class Player extends Entity{
 
     GamePanel gp;
     KeyHandler keyH;
-    int collOffset;
-    int collSize;
 
     public Player (GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -88,7 +86,7 @@ public class Player extends Entity{
 
         } if (x < leftBound){
             x = leftBound;
-            collisionArea.setLocation(leftBound +collOffset, y + collOffset);
+            collisionArea.setLocation(leftBound + collOffset, y + collOffset);
 
         } else if (x > rightBound){
             x = rightBound;
@@ -102,31 +100,19 @@ public class Player extends Entity{
     }
 
     public void draw(Graphics2D g) {
-        BufferedImage image = null;
-
-        switch (direction) {
-        case "up":
-            image = up;
-            break;
-
-        case "down":
-            image = down;
-            break;
-
-        case "left":
-            image = left;
-            break;
-
-        case "right":
-            image = right;
-            break;
-        }
+        BufferedImage image = switch (direction) {
+            case "up" -> up;
+            case "down" -> down;
+            case "left" -> left;
+            case "right" -> right;
+            default -> null;
+        };
 
         g.drawImage(image, x, y, gp.resizedSize, gp.resizedSize , null);
 
 //        code to show player's collision area
-        g.setColor(Color.BLUE);
-        g.fill(collisionArea);
-        g.draw(collisionArea);
+//        g.setColor(Color.BLUE);
+//        g.fill(collisionArea);
+//        g.draw(collisionArea);
     }
 }

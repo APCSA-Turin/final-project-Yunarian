@@ -9,7 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class GamePanel extends JPanel implements Runnable {
     final int origSize = 16; // 16 by 16
@@ -21,7 +22,6 @@ public class GamePanel extends JPanel implements Runnable {
     BufferedImage background;
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
-    CollisionController cController = new CollisionController(this);
     Player player = new Player(this, keyH);
     Target target1 = new Target(this);
     Target target2 = new Target(this, 4);
@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
     int score = 0;
     boolean gameRunning = true;
+//    int highScore = findHighScore();
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(WindowWidth, WindowHeight));
@@ -108,6 +109,19 @@ public class GamePanel extends JPanel implements Runnable {
                 }
 
             }
+        // when the game ends, save the score to the file textScores.
+        try {
+            FileWriter fW = new FileWriter("src/main/textScores", true);
+            BufferedWriter bW = new BufferedWriter(fW);
+
+            bW.write(score);
+            bW.newLine();
+            bW.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
 
@@ -119,6 +133,8 @@ public class GamePanel extends JPanel implements Runnable {
         target1.draw(g2);
         target2.draw(g2);
         player.draw(g2);
+
+        bullet.collisionArea.setSize(0, 0);
         if (keyH.shooting) {
             bullet.displayBullet(g2);
         }
@@ -126,10 +142,30 @@ public class GamePanel extends JPanel implements Runnable {
         g.setColor(Color.WHITE);
         setFont(new Font("SansSerif", Font.PLAIN, 32));
         g.drawString("Score: " + score, 9, WindowHeight - 50);
+        g.drawString("High Score: " + 200, 9, WindowHeight - 100);
 
         if (!gameRunning) {
             g.drawString("YOU LOST!!!!!!!!", 300, 300);
         }
         g2.dispose();
+    }
+
+    private int findHighScore() {
+        int hScore = 0;
+        try {
+            File scoreFile = new File("src/main/textScores");
+            Scanner myReader = new Scanner(scoreFile);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                // if there's a number in the file which is greater than high score,
+                // set high score equal to it
+            }
+            myReader.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return hScore;
     }
 }

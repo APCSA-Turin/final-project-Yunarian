@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Target extends Entity {
 
     GamePanel gp;
-    int collOffset;
+
 
     public Target(GamePanel gp) {
         this.gp = gp;
@@ -17,8 +17,8 @@ public class Target extends Entity {
         setDefaultValues();
         getTargetImage();
 
-        y = -200 + (int)(Math.random() * 150);
-        x = (int) (Math.random() * (800 - gp.resizedSize));
+        newX();
+        newY();
 
         collOffset = 3;
         collSize = 42;
@@ -31,14 +31,15 @@ public class Target extends Entity {
 
         getTargetImage();
 
-        y = -200 + (int)(Math.random() * 150);
-        x = (int) (Math.random() * (800 - gp.resizedSize));
+        newX();
+        newY();
 
         collOffset = 3;
         collSize = 42;
         collisionArea = new Rectangle(x - collOffset, y - collOffset, collSize, collSize);
     }
 
+    // Loads the target's sprite
     public void getTargetImage() {
         try {
             down = ImageIO.read(getClass().getResourceAsStream("/target/Target.png"));
@@ -58,25 +59,24 @@ public class Target extends Entity {
 
         } else {
             y = -150;
-            x = (int) (Math.random() * (800 - gp.resizedSize));
+            newX();
             collisionArea.setLocation(x, y);
         }
 
     }
 
     // generates a random x-value 
-    public void newX() {
-        x = (int) (Math.random() * (800 - gp.resizedSize));
-    }
+    public void newX() {x = (int) (Math.random() * (800 - gp.resizedSize - 9));}
 
-    public void newY() {
-        y = -200 + (int)(Math.random() * 150);
-    }
+
+    public void newY() {y = -200 + (int)(Math.random() * 150);}
+
 
     public boolean checkCollision(Bullet b) {
         return collisionArea.intersects(b.collisionArea);
     }
 
+    // Displays the target
     public void draw(Graphics2D g) {
 
         g.drawImage(down, x, y, gp.resizedSize, gp.resizedSize, null);

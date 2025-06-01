@@ -5,9 +5,8 @@ import java.awt.*;
 public class Main {
     // main.Main method to show frame
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Time Trial!!!");
+        JFrame frame = new JFrame("Targets May Be Falling");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
         GamePanel game = new GamePanel();
         game.setBackground(Color.BLACK);
@@ -19,5 +18,6 @@ public class Main {
         frame.setResizable(false);
 
         game.startGameThread();
+
     }
 }

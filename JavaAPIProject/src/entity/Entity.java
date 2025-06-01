@@ -13,14 +13,17 @@ public class Entity {
     public String direction;
     public Rectangle collisionArea;
 
+
     public Entity() {
         setDefaultValues();
     }
+
 
     public Entity (int speed) {
         setDefaultValues();
         this.speed = speed;
     }
+
 
     public Entity(int x, int y, int speed, String direction) {
         this.x = x;
@@ -29,6 +32,8 @@ public class Entity {
         this.direction = direction;
     }
 
+
+    // Sets the default values for all Entity objects.
     public void setDefaultValues() {
         x = 699;
         y = 501;

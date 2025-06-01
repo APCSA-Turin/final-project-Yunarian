@@ -20,6 +20,7 @@ public class Bullet extends Entity{
         getBulletImage();
     }
 
+    // Loads the images for the Bullet object
     public void getBulletImage() {
         try {
 
@@ -33,6 +34,7 @@ public class Bullet extends Entity{
         }
     }
 
+    // displays the bullet depending on the direction the player is facing,
     public void displayBullet(Graphics2D g2) {
         BufferedImage image = down;
         int width = 0;

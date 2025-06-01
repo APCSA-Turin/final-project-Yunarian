@@ -25,6 +25,7 @@ public class Player extends Entity{
         collisionArea = new Rectangle(x + collOffset, y + collOffset, collSize, collSize);
     }
 
+    // Loads the images for the Player object
     public void getPlayerImage () {
         try {
 
@@ -40,6 +41,8 @@ public class Player extends Entity{
 
     }
 
+    // Moves the player depending on which movement key is pressed.
+    // Additionally prevents the player from moving outside of the window.
     public void update() {
 
         if (keyH.upPressed) {
@@ -69,7 +72,7 @@ public class Player extends Entity{
         inBounds();
     }
 
-    // keeps the player always visible on the window
+    // Keeps the player always visible on the window
     public void inBounds() {
         int topBound = 0;
         int bottomBound = gp.WindowHeight - 87;
@@ -99,6 +102,7 @@ public class Player extends Entity{
         return collisionArea.intersects(entity.collisionArea);
     }
 
+    // Draws the player object
     public void draw(Graphics2D g) {
         BufferedImage image = switch (direction) {
             case "up" -> up;
